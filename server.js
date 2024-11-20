@@ -42,6 +42,11 @@ app.use(session({
         sameSite: 'Strict', // Adjust this based on your needs
         maxAge: 1000 * 60 * 60 * 24, // Session valid for 24 hours
     },
+    unset: 'destroy',
+    // Add error handling for session store
+    error(err) {
+        console.error('Session store error:', err);
+    }
 }));
 
 
@@ -149,7 +154,10 @@ app.post('/logout', authenticateSession, (req, res) => {
         }
 
         // Clear the session cookie on the client-side
-        res.clearCookie('connect.sid', { path: '/' });
+        res.clearCookie('connect.sid', { 
+            path: '/', 
+            httpOnly: true,
+            sameSite: 'Strict', });
 
         console.log("logout successfully")
 
