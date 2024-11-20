@@ -49,17 +49,18 @@ app.use(session({
 // Middleware to authenticate user
 const authenticateSession = (req, res, next) => {
     console.log("authenticating32 dsaf");
-    console.log("auth232",req.session);
-    console.log("auth",req.session.user);
+    next();
+    // console.log("auth232",req.session);
+    // console.log("auth",req.session.user);
 
-    if (req.session.user) {
-        console.log("authenticating done");
-        req.user = { _id: req.session.user.id }; // Set req.user
-        next();
-    } else {
-        console.log("authenticating denied");
-        res.status(401).json({ success: false, message: 'Access denied' });
-    }
+    // if (req.session.user) {
+    //     console.log("authenticating done");
+    //     req.user = { _id: req.session.user.id }; // Set req.user
+    //     next();
+    // } else {
+    //     console.log("authenticating denied");
+    //     res.status(401).json({ success: false, message: 'Access denied' });
+    // }
 };
 
 // Middleware to verify if the user is a member
@@ -169,7 +170,7 @@ app.post('/logout', (req, res) => {
 
 
 // Me Route
-app.get('/me', authenticateSession, async (req, res) => {
+app.get('/me', async (req, res) => {
     try {
         console.log("heyyy")
         console.log(req.session,"sessiiion")
@@ -218,7 +219,7 @@ app.post('/membership', async (req, res) => {
 
 // API route to add an expense
 // API route to add an expense
-app.post('/expenses', authenticateSession, async (req, res) => {
+app.post('/expenses', async (req, res) => {
     const { amount, category, date, notes } = req.body;
 
     // Validate required fields
