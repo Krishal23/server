@@ -32,27 +32,17 @@ app.use(cors({
 app.use(cookieParser());
 
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your_secret_key', // Use a strong secret key
+    secret: 'your_secret_key', // Use a strong secret key
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
-    cookie: {
-        secure: 'production', // Set to true in production (when using HTTPS)
-        httpOnly: true, // Prevent client-side JS access to cookies
-        sameSite: 'Strict', // Adjust this based on your needs
-        maxAge: 1000 * 60 * 60 * 24, // Session valid for 24 hours
-    },
-    unset: 'destroy',
-    // Add error handling for session store
-    error(err) {
-        console.error('Session store error:', err);
-    }
 }));
 
 
 // Middleware to authenticate user
 const authenticateSession = (req, res, next) => {
     console.log("authenticating32 dsaf");
+    console.log("auth232",req.session);
     console.log("auth",req.session.user);
 
     if (req.session.user) {
@@ -147,7 +137,7 @@ app.post('/login', async (req, res) => {
 });
 
 // Logout Route
-app.post('/logout', authenticateSession, (req, res) => {
+app.post('/logout', (req, res) => {
 
     console.log(req.session.user)
 
