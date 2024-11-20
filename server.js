@@ -31,15 +31,19 @@ app.use(cors({
 }));
 app.use(cookieParser());
 
-// Session middleware
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your_secret_key', // Use a strong secret key
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
-    cookie: { secure: false }, // Set to true if using HTTPS
-    maxAge: 1000 * 60 * 60 * 24 // Session valid for 24 hours
+    cookie: {
+        secure: 'production', // Set to true in production (when using HTTPS)
+        httpOnly: true, // Prevent client-side JS access to cookies
+        sameSite: 'Strict', // Adjust this based on your needs
+        maxAge: 1000 * 60 * 60 * 24, // Session valid for 24 hours
+    },
 }));
+
 
 // Middleware to authenticate user
 const authenticateSession = (req, res, next) => {
