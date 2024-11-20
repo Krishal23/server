@@ -52,7 +52,9 @@ app.use(session({
 
 // Middleware to authenticate user
 const authenticateSession = (req, res, next) => {
-    console.log("authenticating32");
+    console.log("authenticating32 dsaf");
+    console.log("auth",req.session.user);
+
     if (req.session.user) {
         console.log("authenticating done");
         req.user = { _id: req.session.user.id }; // Set req.user
