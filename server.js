@@ -26,16 +26,23 @@ connectDB();
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: 'https://helios-personalfinancialbuddy3.onrender.com'|| '*',
-    credentials: true,
+    origin: 'https://helios-personalfinancialbuddy3.onrender.com', // Your frontend URL
+    credentials: true, // Allow cookies to be sent
 }));
+
 app.use(cookieParser());
 
 app.use(session({
-    secret: 'your_secret_key', // Use a strong secret key
+    secret: 'your_secret_key',
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', // Set to true in production
+        httpOnly: true,
+        sameSite: 'None', // 'None' is required for cross-site cookies in production (CORS requests)
+        maxAge: 1000 * 60 * 60 * 24, // 24 hours
+    },
 }));
 
 
