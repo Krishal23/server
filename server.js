@@ -162,7 +162,9 @@ app.post('/logout', authenticateSession, (req, res) => {
 // Me Route
 app.get('/me', authenticateSession, async (req, res) => {
     try {
-        console.log(req.session.user)
+        console.log("heyyy")
+        console.log(req.session,"sessiiion")
+        console.log(req.session.user,"userrrrrrr")
         const user = await User.findById(req.session.user.id).select('-password'); // Exclude password from response
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
