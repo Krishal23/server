@@ -82,7 +82,7 @@ const verifyMembership = async (req, res, next) => {
 
 // Signup Route
 app.post('/signup', async (req, res) => {
-    console.log("hello")
+    console.log("hello adf")
     const { username, email, password } = req.body;
     console.log("Username:", username);
     console.log("Email:", email);
