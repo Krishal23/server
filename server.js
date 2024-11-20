@@ -26,7 +26,7 @@ connectDB();
 // Middleware
 app.use(express.json());
 app.use(cors({
-    origin: 'https://helios-personalfinancialbuddy3.onrender.com',
+    origin: 'https://helios-personalfinancialbuddy3.onrender.com'|| '*',
     credentials: true,
 }));
 app.use(cookieParser());
